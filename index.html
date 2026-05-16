@@ -1,665 +1,626 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta name="google-site-verification" content="G4lT8Wsl6eere62zFqtt1vXdeGk6EVvijgG2dPMIW-o" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nova Subs</title>
-  <link href="https://cdn.jsdelivr.net/npm/@fontsource/cairo@latest/index.css" rel="stylesheet">
+  
+  <title>Nova Subs | متجر الاشتراكات الرقمية وشحن الألعاب في تونس</title>
+  <meta name="description" content="احصل على أفضل الاشتراكات الرقمية وشحن الألعاب في تونس. Netflix, Spotify, Free Fire, ChatGPT Plus. تفعيل فوري، دفع آمن، وضمان كامل.">
+  <meta name="keywords" content="Netflix Tunisia, Spotify تونس, شحن فري فاير تونس, D17, اشتراكات رقمية, Nova Subs, ChatGPT Plus تونس, شحن العاب">
+  <meta name="author" content="Nova Subs">
+  
+  <meta property="og:title" content="Nova Subs | Premium Digital Store in Tunisia">
+  <meta property="og:description" content="متجرك الأول للاشتراكات الرقمية، شحن الألعاب، وخدمات الذكاء الاصطناعي في تونس.">
+  <meta property="og:image" content="1778971165885.png">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-    html{scroll-behavior:smooth}
-    body{background:#000;color:#fff;overflow-x:hidden}
-
-    ::-webkit-scrollbar{width:8px}
-    ::-webkit-scrollbar-track{background:#0a0a0a}
-    ::-webkit-scrollbar-thumb{background:#ff0000;border-radius:10px}
-
-    /* NAVBAR */
-    .navbar{
-      position:fixed;top:0;right:0;left:0;z-index:1000;
-      padding:18px 5%;
-      display:flex;justify-content:space-between;align-items:center;
-      background:rgba(0,0,0,0.6);
-      backdrop-filter:blur(20px);
-      border-bottom:1px solid rgba(255,0,0,0.1);
-      transition:all .4s ease
-    }
-    .navbar.scrolled{
-      padding:12px 5%;
-      background:rgba(0,0,0,0.85);
-      border-bottom-color:rgba(255,0,0,0.3)
-    }
-    .nav-logo{font-size:26px;font-weight:900;letter-spacing:1px}
-    .nav-logo span{color:#ff0000}
-    .nav-links{display:flex;gap:30px;list-style:none}
-    .nav-links a{
-      color:#ccc;text-decoration:none;font-size:15px;font-weight:600;
-      position:relative;transition:color .3s
-    }
-    .nav-links a::after{
-      content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;
-      background:#ff0000;transition:width .3s
-    }
-    .nav-links a:hover{color:#fff}
-    .nav-links a:hover::after{width:100%}
-    .nav-toggle{display:none;font-size:24px;color:#fff;cursor:pointer;background:none;border:none}
-
-    /* HERO */
-    .hero{
-      min-height:100vh;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      text-align:center;padding:120px 20px 80px;
-      position:relative;overflow:hidden
-    }
-    .hero::before{
-      content:'';position:absolute;
-      width:600px;height:600px;
-      background:radial-gradient(circle,rgba(255,0,0,0.15),transparent 70%);
-      top:50%;left:50%;transform:translate(-50%,-50%);
-      animation:heroPulse 4s ease-in-out infinite
-    }
-    @keyframes heroPulse{
-      0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}
-      50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+    /* =========================================
+       1. CSS VARIABLES & BASE SETUP
+       ========================================= */
+    :root {
+      --primary: #00d4ff;
+      --secondary: #0055ff;
+      --accent: #ff0055;
+      --success: #25d366;
+      --dark-bg: #030305;
+      --card-bg: rgba(10, 10, 15, 0.6);
+      --glass-border: rgba(0, 212, 255, 0.15);
+      --glow: rgba(0, 212, 255, 0.4);
+      --text-main: #ffffff;
+      --text-muted: #a0a0b0;
     }
 
-    /* Floating particles */
-    .particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-    .particle{
-      position:absolute;width:3px;height:3px;
-      background:rgba(255,0,0,0.4);border-radius:50%;
-      animation:floatUp linear infinite
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Cairo', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark-bg); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--dark-bg); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary), var(--secondary)); border-radius: 10px; }
+
+    /* =========================================
+       2. NAVBAR (GLASSMORPHISM)
+       ========================================= */
+    .navbar {
+      position: fixed; top: 0; right: 0; left: 0; z-index: 1000;
+      padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(3, 3, 5, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent; transition: all 0.4s ease;
     }
-    @keyframes floatUp{
-      0%{transform:translateY(100vh) scale(0);opacity:0}
-      10%{opacity:1}
-      90%{opacity:1}
-      100%{transform:translateY(-10vh) scale(1);opacity:0}
+    .navbar.scrolled {
+      padding: 12px 5%; background: rgba(3, 3, 5, 0.85);
+      border-bottom-color: var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .nav-logo { font-size: 28px; font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .nav-logo i { color: var(--primary); font-size: 24px; filter: drop-shadow(0 0 10px var(--glow)); animation: pulseGlow 2s infinite; }
+    .nav-logo span { color: var(--primary); }
+    
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { color: #ccc; text-decoration: none; font-size: 16px; font-weight: 600; position: relative; transition: color 0.3s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -5px; right: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s cubic-bezier(0.2, 1, 0.3, 1); }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; box-shadow: 0 0 10px var(--primary); }
+    .nav-toggle { display: none; font-size: 24px; color: #fff; background: none; border: none; cursor: pointer; }
+
+    /* =========================================
+       3. HERO SECTION (ULTRA PREMIUM)
+       ========================================= */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 140px 5% 60px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(0, 102, 255, 0.15), transparent 60%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; animation: heroPulse 6s ease-in-out infinite;
+    }
+    
+    .hero-layout { display: flex; align-items: center; justify-content: space-between; gap: 50px; max-width: 1300px; width: 100%; z-index: 1; flex-wrap: wrap; }
+    .hero-text { flex: 1.2; min-width: 300px; text-align: right; }
+    .hero-img-container { flex: 1; min-width: 300px; display: flex; justify-content: center; animation: floatMascot 5s ease-in-out infinite; position: relative; }
+    .hero-img-container::after { content: ''; position: absolute; bottom: -20px; width: 60%; height: 20px; background: radial-gradient(ellipse at center, rgba(0,212,255,0.2) 0%, transparent 70%); filter: blur(5px); animation: shadowPulse 5s ease-in-out infinite; }
+    .hero-img-container img { max-width: 100%; height: auto; max-height: 550px; filter: drop-shadow(0 0 45px rgba(0, 212, 255, 0.5)); z-index: 2; }
+    
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px; background: rgba(0,212,255,0.08); border: 1px solid var(--glass-border);
+      padding: 8px 24px; border-radius: 50px; font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 25px;
+      backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0,212,255,0.1); animation: fadeInDown 0.8s ease;
+    }
+    .hero h1 { font-size: clamp(40px, 5.5vw, 70px); font-weight: 900; line-height: 1.15; margin-bottom: 25px; animation: fadeInUp 0.8s ease 0.2s both; }
+    .hero h1 span { background: linear-gradient(135deg, var(--primary), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px rgba(0,212,255,0.4); }
+    .hero p { font-size: clamp(16px, 1.8vw, 20px); color: var(--text-muted); max-width: 650px; line-height: 1.8; animation: fadeInUp 0.8s ease 0.4s both; }
+    .hero p strong { color: #fff; font-weight: 700; }
+
+    .btns { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.6s both; }
+    .btn {
+      padding: 16px 36px; border-radius: 16px; text-decoration: none; font-weight: 700; font-size: 16px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;
+    }
+    .btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent); transform: skewX(-20deg); transition: 0.5s; }
+    .btn:hover::after { left: 150%; }
+    
+    .btn.primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 10px 30px rgba(0,102,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+    .btn.primary:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,212,255,0.6); }
+    
+    .btn.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3); border: 1px solid rgba(255,255,255,0.1); }
+    .btn.whatsapp:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5); }
+
+    /* =========================================
+       4. TRUST BAR
+       ========================================= */
+    .trust-bar {
+      max-width: 1200px; width: 90%; margin: -40px auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+      border-radius: 20px; padding: 30px; position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+    .trust-item { display: flex; align-items: center; justify-content: center; gap: 15px; text-align: right; }
+    .trust-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(0,212,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--primary); box-shadow: inset 0 0 15px rgba(0,212,255,0.05); }
+    .trust-text h4 { font-size: 16px; font-weight: 700; color: #fff; }
+    .trust-text p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* =========================================
+       5. PREMIUM CARDS & SECTIONS
+       ========================================= */
+    section { padding: 80px 5%; position: relative; }
+    .title { font-size: clamp(32px, 4vw, 45px); text-align: center; font-weight: 900; margin-bottom: 15px; position: relative; }
+    .title span { color: var(--primary); text-shadow: 0 0 20px rgba(0,212,255,0.3); }
+    .subtitle { text-align: center; color: var(--text-muted); font-size: 18px; margin-bottom: 50px; }
+    .section-line { width: 80px; height: 4px; background: linear-gradient(90deg, var(--primary), transparent); margin: 0 auto 50px; border-radius: 10px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; max-width: 1200px; margin: 0 auto; }
+
+    /* Animated Border Wrapper */
+    .card-wrapper {
+      position: relative; padding: 1px; border-radius: 26px; overflow: hidden; background: var(--glass-border);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .card-wrapper::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent 0%, var(--primary) 20%, transparent 40%);
+      animation: spin 4s linear infinite; opacity: 0; transition: opacity 0.4s; z-index: 0;
+    }
+    .card-wrapper:hover { transform: translateY(-12px); box-shadow: 0 25px 60px rgba(0, 102, 255, 0.15); }
+    .card-wrapper:hover::before { opacity: 1; }
+
+    .card {
+      background: var(--dark-bg); border-radius: 25px; height: 100%; display: flex; flex-direction: column;
+      position: relative; z-index: 1; overflow: hidden;
+    }
+    
+    .card-img-wrapper { width: 100%; height: 240px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+    .card-wrapper:hover .card-img-wrapper img { transform: scale(1.1) rotate(1deg); }
+    .card-img-wrapper::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--dark-bg) 0%, transparent 60%); }
+
+    .card-content { padding: 30px; display: flex; flex-direction: column; flex-grow: 1; position: relative; }
+    .card-icon {
+      width: 55px; height: 55px; background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary);
+      position: absolute; top: -30px; right: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.6); transition: all 0.3s;
+    }
+    .card-wrapper:hover .card-icon { transform: translateY(-5px) scale(1.1); box-shadow: 0 15px 25px rgba(0,212,255,0.3); color: #fff; background: var(--primary); border-color: var(--primary); }
+
+    .card h3 { font-size: 24px; font-weight: 700; margin-bottom: 10px; margin-top: 15px; color: #fff; }
+    .price { font-size: 34px; font-weight: 900; background: linear-gradient(135deg, var(--primary), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 5px 0 15px; }
+    .price .currency { font-size: 18px; font-weight: 600; }
+    .bio { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 25px; min-height: 50px; }
+
+    .buy {
+      margin-top: auto; width: 100%; padding: 15px; border: 1px solid var(--glass-border); border-radius: 14px;
+      background: rgba(0, 212, 255, 0.05); color: #fff; font-weight: 700; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .card-wrapper:hover .buy { background: linear-gradient(135deg, var(--primary), var(--secondary)); border-color: transparent; box-shadow: 0 10px 25px rgba(0,102,255,0.4); }
+    .buy:active { transform: scale(0.97); }
+
+    /* =========================================
+       6. SOCIAL MEDIA & LIST ITEMS
+       ========================================= */
+    .list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .item-wrapper { padding: 1px; border-radius: 20px; background: var(--glass-border); transition: all 0.3s; }
+    .item-wrapper:hover { background: linear-gradient(135deg, var(--primary), transparent); transform: translateX(-10px); box-shadow: 0 15px 30px rgba(0,212,255,0.15); }
+    .item { background: var(--dark-bg); padding: 25px; border-radius: 19px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; height: 100%; }
+    .item-right { display: flex; align-items: center; gap: 15px; }
+    .item-icon { width: 50px; height: 50px; background: rgba(0,212,255,0.05); border: 1px solid var(--glass-border); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--primary); transition: 0.3s; }
+    .item-wrapper:hover .item-icon { background: var(--primary); color: #fff; }
+    .item-name { font-weight: 700; font-size: 17px; }
+    .price-small { color: var(--primary); font-weight: 900; font-size: 18px; white-space: nowrap; }
+
+    /* =========================================
+       7. TESTIMONIALS & FAQ (NEW SECTIONS)
+       ========================================= */
+    .testimonials { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .review-card { background: rgba(10,10,15,0.6); border: 1px solid var(--glass-border); padding: 30px; border-radius: 24px; position: relative; }
+    .review-card i.fa-quote-right { position: absolute; top: 20px; left: 20px; font-size: 40px; color: rgba(0,212,255,0.1); }
+    .stars { color: #ffc107; margin-bottom: 15px; font-size: 14px; }
+    .review-text { font-size: 16px; color: #ccc; line-height: 1.8; margin-bottom: 20px; font-style: italic; }
+    .reviewer { display: flex; align-items: center; gap: 15px; }
+    .reviewer-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; }
+    .reviewer-info h5 { font-size: 16px; color: #fff; }
+    .reviewer-info span { font-size: 13px; color: var(--primary); }
+
+    .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+    details { background: rgba(10,10,15,0.6); border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; transition: 0.3s; }
+    details[open] { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,212,255,0.1); }
+    summary { padding: 25px; font-size: 18px; font-weight: 700; color: #fff; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary); transition: 0.3s; }
+    details[open] summary::after { transform: rotate(180deg); }
+    .faq-content { padding: 0 25px 25px; color: var(--text-muted); font-size: 15px; line-height: 1.8; }
+
+    /* PAYMENT METHODS */
+    .payments { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; opacity: 0.8; }
+    .pay-method { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .pay-method i { font-size: 35px; color: #fff; }
+    .pay-method span { font-size: 14px; font-weight: 600; }
+
+    /* =========================================
+       8. CTA & FOOTER
+       ========================================= */
+    .cta-section { text-align: center; padding: 100px 5%; background: linear-gradient(180deg, var(--dark-bg), rgba(0,50,150,0.1), var(--dark-bg)); position: relative; }
+    footer { text-align: center; padding: 40px 5%; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: 15px; }
+
+    /* =========================================
+       9. ANIMATIONS & UTILS
+       ========================================= */
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes pulseGlow { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px var(--glow)); } 50% { opacity: 0.6; filter: drop-shadow(0 0 2px var(--glow)); } }
+    @keyframes shadowPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 0.2; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+    /* =========================================
+       10. MOBILE RESPONSIVENESS
+       ========================================= */
+    .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 998; opacity: 0; pointer-events: none; transition: 0.4s; }
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+    .mobile-menu { position: fixed; top: 0; right: -100%; width: 300px; height: 100vh; background: rgba(5,5,8,0.98); border-left: 1px solid var(--glass-border); padding: 100px 30px 30px; transition: right 0.4s cubic-bezier(0.2, 1, 0.3, 1); z-index: 999; display: flex; flex-direction: column; gap: 15px; }
+    .mobile-menu.open { right: 0; box-shadow: -10px 0 50px rgba(0,0,0,0.5); }
+    .mobile-menu a { color: #ccc; text-decoration: none; font-size: 18px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 600; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+    .mobile-menu a i { color: var(--primary); width: 24px; font-size: 20px; }
+
+    @media(max-width: 992px) {
+      .hero-layout { flex-direction: column-reverse; text-align: center; padding-top: 40px; }
+      .hero-text { text-align: center; display: flex; flex-direction: column; align-items: center; }
+      .hero h1 { font-size: clamp(35px, 8vw, 50px); }
+      .btns { justify-content: center; }
+      .trust-bar { margin-top: 20px; }
+    }
+    @media(max-width: 768px) {
+      .nav-links { display: none; } .nav-toggle { display: block; }
+      section { padding: 60px 5%; }
+      .trust-bar { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .trust-item { flex-direction: column; text-align: center; gap: 10px; }
+      .card-img-wrapper { height: 200px; }
+      .btn { width: 100%; }
     }
 
-    .hero-badge{
-      display:inline-flex;align-items:center;gap:8px;
-      background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);
-      padding:8px 20px;border-radius:50px;font-size:14px;
-      color:#ff6b6b;margin-bottom:25px;
-      animation:fadeInDown .8s ease
-    }
-    .hero-badge i{animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    /* WHATSAPP FLOAT & PURCHASE POPUP */
+    .wa-float { position: fixed; bottom: 30px; right: 30px; z-index: 900; width: 65px; height: 65px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: #fff; text-decoration: none; box-shadow: 0 10px 30px rgba(37,211,102,0.4); animation: waFloat 3s ease-in-out infinite; transition: transform 0.3s; }
+    .wa-float:hover { transform: scale(1.1) rotate(-10deg); }
+    @keyframes waFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-    .hero h1{
-      font-size:clamp(50px,10vw,100px);font-weight:900;
-      position:relative;z-index:1;
-      animation:fadeInUp .8s ease .2s both
-    }
-    .hero h1 span{
-      color:#ff0000;
-      text-shadow:0 0 40px rgba(255,0,0,0.5),0 0 80px rgba(255,0,0,0.2)
-    }
-    .hero p{
-      margin-top:20px;font-size:clamp(16px,2.5vw,22px);
-      color:#aaa;max-width:800px;line-height:1.9;
-      position:relative;z-index:1;
-      animation:fadeInUp .8s ease .4s both
-    }
-
-    .btns{margin-top:35px;display:flex;gap:15px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;animation:fadeInUp .8s ease .6s both}
-
-    .btn{
-      padding:16px 32px;border-radius:14px;text-decoration:none;
-      font-weight:700;font-size:16px;cursor:pointer;
-      display:inline-flex;align-items:center;gap:10px;
-      transition:all .3s ease;position:relative;overflow:hidden
-    }
-    .btn::before{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent);
-      transform:translateX(-100%);transition:transform .5s
-    }
-    .btn:hover::before{transform:translateX(100%)}
-    .primary{
-      background:linear-gradient(135deg,#ff0000,#cc0000);
-      color:#fff;box-shadow:0 8px 30px rgba(255,0,0,0.3)
-    }
-    .primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,0,0,0.5)}
-    .outline{
-      border:2px solid rgba(255,0,0,0.5);color:#fff;
-      background:rgba(255,0,0,0.05)
-    }
-    .outline:hover{
-      border-color:#ff0000;background:rgba(255,0,0,0.1);
-      transform:translateY(-3px)
-    }
-
-    /* STATS */
-    .stats{
-      display:flex;justify-content:center;gap:60px;flex-wrap:wrap;
-      padding:60px 5%;position:relative;z-index:1;
-      animation:fadeInUp .8s ease .8s both
-    }
-    .stat{text-align:center}
-    .stat-num{font-size:42px;font-weight:900;color:#ff0000}
-    .stat-label{color:#888;font-size:14px;margin-top:5px}
-
-    /* SECTIONS */
-    section{padding:100px 7%}
-
-    .title{
-      font-size:clamp(32px,5vw,50px);text-align:center;
-      font-weight:900;margin-bottom:10px;
-      position:relative
-    }
-    .title span{color:#ff0000}
-    .subtitle{text-align:center;color:#888;font-size:17px;margin-bottom:50px;line-height:1.8}
-
-    .section-line{
-      width:60px;height:4px;background:linear-gradient(90deg,#ff0000,transparent);
-      margin:15px auto 0;border-radius:10px
-    }
-
-    /* CARDS GRID */
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
-
-    .card{
-      background:linear-gradient(145deg,#0d0d0d,#111);
-      border:1px solid #1a1a1a;
-      border-radius:24px;padding:30px;
-      transition:all .4s cubic-bezier(.175,.885,.32,1.275);
-      position:relative;overflow:hidden
-    }
-    .card::before{
-      content:'';position:absolute;top:0;right:0;
-      width:100px;height:100px;
-      background:radial-gradient(circle,rgba(255,0,0,0.1),transparent 70%);
-      transition:all .4s
-    }
-    .card:hover{
-      transform:translateY(-10px);
-      border-color:rgba(255,0,0,0.4);
-      box-shadow:0 20px 60px rgba(255,0,0,0.1)
-    }
-    .card:hover::before{width:200px;height:200px}
-
-    .card-icon{
-      width:60px;height:60px;
-      background:rgba(255,0,0,0.1);
-      border:1px solid rgba(255,0,0,0.2);
-      border-radius:16px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:26px;color:#ff0000;margin-bottom:18px;
-      transition:all .3s
-    }
-    .card:hover .card-icon{
-      background:rgba(255,0,0,0.2);
-      transform:scale(1.1) rotate(-5deg)
-    }
-
-    .card h3{font-size:22px;font-weight:700;margin-bottom:8px}
-    .price{
-      font-size:36px;font-weight:900;
-      background:linear-gradient(135deg,#ff0000,#ff6b6b);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-      margin:12px 0
-    }
-    .price .currency{font-size:18px;font-weight:600}
-    .bio{color:#999;font-size:14px;line-height:1.8;margin-bottom:5px}
-
-    .buy{
-      margin-top:18px;width:100%;padding:14px;border:none;
-      border-radius:14px;
-      background:linear-gradient(135deg,#ff0000,#cc0000);
-      color:#fff;font-weight:700;font-size:15px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      transition:all .3s;position:relative;overflow:hidden
-    }
-    .buy::after{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(135deg,transparent,rgba(255,255,255,0.2),transparent);
-      transform:translateX(-100%);transition:transform .5s
-    }
-    .buy:hover::after{transform:translateX(100%)}
-    .buy:hover{box-shadow:0 8px 25px rgba(255,0,0,0.4);transform:scale(1.02)}
-
-    /* SOCIAL LIST */
-    .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-
-    .item{
-      background:linear-gradient(145deg,#0a0a0a,#111);
-      border:1px solid #1a1a1a;
-      padding:22px 25px;border-radius:18px;
-      display:flex;justify-content:space-between;align-items:center;
-      transition:all .3s;cursor:pointer
-    }
-    .item:hover{
-      border-color:rgba(255,0,0,0.3);
-      transform:translateX(-8px);
-      background:linear-gradient(145deg,#0d0000,#111)
-    }
-    .item-right{display:flex;align-items:center;gap:14px}
-    .item-icon{
-      width:44px;height:44px;
-      background:rgba(255,0,0,0.1);
-      border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      font-size:20px;color:#ff0000
-    }
-    .item-name{font-weight:600;font-size:15px}
-    .price-small{
-      color:#ff0000;font-weight:900;font-size:16px;
-      white-space:nowrap
-    }
-
-    /* FEATURES */
-    .features{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:25px;margin-top:50px
-    }
-    .feature{
-      text-align:center;padding:30px 20px;
-      border-radius:20px;
-      background:rgba(255,0,0,0.03);
-      border:1px solid rgba(255,0,0,0.08);
-      transition:all .3s
-    }
-    .feature:hover{
-      background:rgba(255,0,0,0.08);
-      border-color:rgba(255,0,0,0.2);
-      transform:translateY(-5px)
-    }
-    .feature i{font-size:32px;color:#ff0000;margin-bottom:15px}
-    .feature h4{font-size:17px;margin-bottom:8px}
-    .feature p{color:#888;font-size:13px;line-height:1.7}
-
-    /* CTA */
-    .cta{
-      text-align:center;
-      padding:100px 7%;
-      background:linear-gradient(180deg,#000,#1a0000,#000);
-      position:relative;overflow:hidden
-    }
-    .cta::before{
-      content:'';position:absolute;
-      width:500px;height:500px;
-      background:radial-gradient(circle,rgba(255,0,0,0.08),transparent 70%);
-      top:50%;left:50%;transform:translate(-50%,-50%)
-    }
-
-    /* FOOTER */
-    footer{
-      text-align:center;padding:30px;
-      border-top:1px solid #1a1a1a;color:#555;
-      font-size:14px;
-      display:flex;justify-content:center;align-items:center;gap:8px;
-      flex-wrap:wrap
-    }
-    footer i{color:#ff0000}
-    .footer-links{margin-top:15px;display:flex;justify-content:center;gap:20px}
-    .footer-links a{
-      color:#666;text-decoration:none;font-size:20px;
-      transition:all .3s
-    }
-    .footer-links a:hover{color:#ff0000;transform:translateY(-3px)}
-
-    /* ANIMATIONS */
-    @keyframes fadeInUp{
-      from{opacity:0;transform:translateY(30px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-    @keyframes fadeInDown{
-      from{opacity:0;transform:translateY(-20px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    .reveal{
-      opacity:0;transform:translateY(40px);
-      transition:all .8s cubic-bezier(.175,.885,.32,1.275)
-    }
-    .reveal.active{opacity:1;transform:translateY(0)}
-
-    /* MOBILE NAV */
-    .mobile-menu{
-      position:fixed;top:0;right:-100%;width:280px;height:100vh;
-      background:rgba(10,10,10,0.98);
-      backdrop-filter:blur(20px);
-      border-left:1px solid #222;
-      padding:80px 30px 30px;
-      transition:right .4s ease;z-index:999;
-      display:flex;flex-direction:column;gap:5px
-    }
-    .mobile-menu.open{right:0}
-    .mobile-menu a{
-      color:#ccc;text-decoration:none;font-size:17px;
-      padding:14px 0;border-bottom:1px solid #1a1a1a;
-      font-weight:600;transition:all .3s;
-      display:flex;align-items:center;gap:10px
-    }
-    .mobile-menu a i{color:#ff0000;width:20px}
-    .mobile-menu a:hover{color:#fff;padding-right:10px}
-    .menu-overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,0.6);
-      z-index:998;opacity:0;pointer-events:none;transition:opacity .3s
-    }
-    .menu-overlay.open{opacity:1;pointer-events:all}
-
-    /* RESPONSIVE */
-    @media(max-width:768px){
-      .nav-links{display:none}
-      .nav-toggle{display:block}
-      .stats{gap:30px}
-      .stat-num{font-size:32px}
-      section{padding:70px 5%}
-      .grid{grid-template-columns:1fr}
-      .list{grid-template-columns:1fr}
-    }
-
-    /* GLOW LINE */
-    .glow-line{
-      height:1px;
-      background:linear-gradient(90deg,transparent,rgba(255,0,0,0.5),transparent);
-      margin:0 auto;max-width:400px
-    }
-
-    /* WHATSAPP FLOAT */
-    .wa-float{
-      position:fixed;bottom:30px;left:30px;z-index:900;
-      width:60px;height:60px;
-      background:#25d366;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      font-size:28px;color:#fff;text-decoration:none;
-      box-shadow:0 5px 25px rgba(37,211,102,0.4);
-      animation:waFloat 3s ease-in-out infinite;
-      transition:transform .3s
-    }
-    .wa-float:hover{transform:scale(1.1)}
-    @keyframes waFloat{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-8px)}
-    }
+    .purchase-popup { position: fixed; bottom: 30px; left: -100%; z-index: 899; background: rgba(10, 10, 15, 0.95); border: 1px solid var(--glass-border); border-radius: 16px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transition: left 0.6s cubic-bezier(0.2, 1, 0.3, 1); backdrop-filter: blur(15px); }
+    .purchase-popup.show { left: 30px; }
+    .purchase-popup i { font-size: 26px; color: var(--primary); animation: pulseGlow 2s infinite; }
+    .purchase-info { display: flex; flex-direction: column; }
+    .purchase-info span { font-size: 13px; color: var(--text-muted); }
+    .purchase-info p { font-size: 15px; font-weight: 700; color: #fff; margin-top: 3px; }
+    @media(max-width: 768px){ .purchase-popup.show { left: 20px; bottom: 110px; right: 20px; } .wa-float { width: 55px; height: 55px; font-size: 30px; bottom: 20px; right: 20px; } }
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="nav-logo">NOVA <span>SUBS</span></div>
+  <div class="nav-logo" onclick="window.scrollTo(0,0)"><i class="fas fa-fire-flame-curved"></i> NOVA <span>SUBS</span></div>
   <ul class="nav-links">
-    <li><a href="#streaming">الخدمات</a></li>
+    <li><a href="#streaming">الاشتراكات</a></li>
+    <li><a href="#gaming">شحن ألعاب</a></li>
     <li><a href="#ai">AI Tools</a></li>
-    <li><a href="#social">سوشيال ميديا</a></li>
-    <li><a href="#features">مميزاتنا</a></li>
-    <li><a href="https://wa.me/21658086148" target="_blank">تواصل</a></li>
+    <li><a href="#faq">الأسئلة الشائعة</a></li>
   </ul>
-  <button class="nav-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+  <button class="nav-toggle" onclick="toggleMenu()"><i class="fas fa-bars-staggered"></i></button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#streaming" onclick="toggleMenu()"><i class="fas fa-play"></i> الخدمات</a>
+  <a href="#streaming" onclick="toggleMenu()"><i class="fas fa-play"></i> الاشتراكات</a>
+  <a href="#gaming" onclick="toggleMenu()"><i class="fas fa-gamepad"></i> شحن ألعاب</a>
   <a href="#ai" onclick="toggleMenu()"><i class="fas fa-robot"></i> AI Tools</a>
   <a href="#social" onclick="toggleMenu()"><i class="fas fa-chart-line"></i> سوشيال ميديا</a>
-  <a href="#features" onclick="toggleMenu()"><i class="fas fa-star"></i> مميزاتنا</a>
-  <a href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> تواصل معنا</a>
+  <a href="#faq" onclick="toggleMenu()"><i class="fas fa-circle-question"></i> الأسئلة الشائعة</a>
+  <a href="https://wa.me/21658086148" target="_blank" style="color: var(--success);"><i class="fab fa-whatsapp"></i> تواصل معنا</a>
 </div>
 
-<!-- HERO -->
 <section class="hero">
   <div class="particles" id="particles"></div>
-  <div class="hero-badge"><i class="fas fa-bolt"></i> أفضل الأسعار في تونس</div>
-  <h1>NOVA <span>SUBS</span></h1>
-  <p>اشتراكات رقمية • AI Tools • Gaming • Social Media Services<br>كل ما تحتاجه بأسعار منافسة وتوصيل سريع</p>
-  <div class="btns">
-    <a class="btn primary" href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> اطلب الآن</a>
-    <a class="btn outline" href="https://www.facebook.com/share/1LWgtzC629/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-  </div>
-  <div class="stats">
-    <div class="stat"><div class="stat-num" data-target="500">0+</div><div class="stat-label">عميل سعيد</div></div>
-    <div class="stat"><div class="stat-num" data-target="50">0+</div><div class="stat-label">خدمة متوفرة</div></div>
-    <div class="stat"><div class="stat-num" data-target="24">0/7</div><div class="stat-label">دعم متواصل</div></div>
+  <div class="hero-layout">
+    <div class="hero-text">
+      <div class="hero-badge"><i class="fas fa-fire-flame-curved"></i> المنصة الأولى في تونس</div>
+      <h1>احصل على أفضل الاشتراكات<br><span>الرقمية وشحن الألعاب ⚡</span></h1>
+      <p>Netflix • ChatGPT Plus • Spotify • Canva • Free Fire وأكثر<br><strong>تفعيل فوري • أسعار قوية • دعم مباشر 24/7</strong></p>
+      <div class="btns">
+        <a class="btn primary" href="#streaming"><i class="fas fa-rocket"></i> تصفح العروض</a>
+        <a class="btn whatsapp" href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> اطلب عبر واتساب</a>
+      </div>
+    </div>
+    <div class="hero-img-container">
+      <img src="1778971165885.png" alt="شخصية اللهب الأزرق">
+    </div>
   </div>
 </section>
 
-<div class="glow-line"></div>
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-icon"><i class="fas fa-bolt"></i></div>
+    <div class="trust-text"><h4>تفعيل فوري</h4><p>تسليم في دقائق معدودة</p></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon" style="color: var(--success); background: rgba(37, 211, 102, 0.1);"><i class="fas fa-shield-halved"></i></div>
+    <div class="trust-text"><h4>دفع آمن</h4><p>D17 و Sobflous والمزيد</p></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon" style="color: #ffc107; background: rgba(255, 193, 7, 0.1);"><i class="fas fa-check-circle"></i></div>
+    <div class="trust-text"><h4>ضمان كامل</h4><p>تعويض أو استرجاع مضمون</p></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon" style="color: var(--accent); background: rgba(255, 0, 85, 0.1);"><i class="fas fa-headset"></i></div>
+    <div class="trust-text"><h4>دعم سريع</h4><p>متواجدون 24/7 لخدمتك</p></div>
+  </div>
+</div>
 
-<!-- STREAMING -->
 <section id="streaming">
   <h2 class="title reveal">🎬 <span>Streaming</span></h2>
-  <p class="subtitle reveal">أشهر الاشتراكات الترفيهية بأفضل الأسعار</p>
+  <p class="subtitle reveal">أشهر الاشتراكات الترفيهية بأفضل الأسعار وضمان كامل</p>
   <div class="section-line reveal"></div>
-  <div class="grid" style="margin-top:40px">
-
-    <div class="card reveal">
-      <div class="card-icon"><i class="fab fa-netflix"></i></div>
-      <h3>Netflix Premium</h3>
-      <div class="price">12.9 <span class="currency">DT</span></div>
-      <p class="bio">4K streaming • حساب مستقر • مشاهدة بدون تقطيع • ملف خاص بك</p>
-      <button class="buy" onclick="order('Netflix Premium','12.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+  
+  <div class="grid">
+    <div class="card-wrapper reveal">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="file_000000008248722f8cee0c39adee3939.png" alt="Netflix Premium" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fab fa-netflix" style="color: #E50914;"></i></div>
+          <h3>Netflix Premium</h3>
+          <div class="price">12.9 <span class="currency">DT</span></div>
+          <p class="bio">استمتع بأعلى جودة 4K UHD. حساب مستقر تماماً، مشاهدة بدون تقطيع، وملف (Profile) خاص بك ومغلق برقم سري.</p>
+          <button class="buy" onclick="order('Netflix Premium','12.9 DT')"><i class="fab fa-whatsapp"></i> اطلب الآن</button>
+        </div>
+      </div>
     </div>
 
-    <div class="card reveal">
-      <div class="card-icon"><i class="fab fa-spotify"></i></div>
-      <h3>Spotify Premium</h3>
-      <div class="price">9.9 <span class="currency">DT</span></div>
-      <p class="bio">موسيقى بدون إعلانات + تحميل الأغاني + جودة عالية</p>
-      <button class="buy" onclick="order('Spotify Premium','9.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    <div class="card-wrapper reveal" style="animation-delay: 0.2s;">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="Screenshot_20260517_000559_Gallery.jpg" alt="Spotify Premium" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fab fa-spotify" style="color: #1DB954;"></i></div>
+          <h3>Spotify Premium</h3>
+          <div class="price">9.9 <span class="currency">DT</span></div>
+          <p class="bio">موسيقى بدون إعلانات مزعجة. ميزة تحميل الأغاني للاستماع بدون إنترنت، وجودة صوت عالية جداً لحسابك الخاص.</p>
+          <button class="buy" onclick="order('Spotify Premium','9.9 DT')"><i class="fab fa-whatsapp"></i> اطلب الآن</button>
+        </div>
+      </div>
     </div>
-
-    <div class="card reveal">
-      <div class="card-icon"><i class="fas fa-tv"></i></div>
-      <h3>IPTV Premium</h3>
-      <div class="price">89 <span class="currency">DT</span></div>
-      <p class="bio">جميع القنوات العالمية + جودة عالية + بث مباشر بدون انقطاع</p>
-      <button class="buy" onclick="order('IPTV Premium','89 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
-    </div>
-
   </div>
 </section>
 
-<div class="glow-line"></div>
+<section id="gaming" style="background: rgba(0,212,255,0.02);">
+  <h2 class="title reveal">🎮 <span>Gaming</span></h2>
+  <p class="subtitle reveal">شحن ألعابك المفضلة بسرعة البرق عبر الـ ID فقط</p>
+  <div class="section-line reveal"></div>
+  
+  <div class="grid">
+    <div class="card-wrapper reveal">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="file_00000000c7b0720c9550487cfcc0af14.png" alt="Free Fire Diamonds" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fas fa-gem" style="color: #00e6ff;"></i></div>
+          <h3>Free Fire</h3>
+          <div class="price">4.5 <span class="currency">DT</span></div>
+          <p class="bio">شحن 100 جوهرة رسمي ومضمون 100%. الشحن يتم عبر الـ ID فقط في أقل من 5 دقائق بدون أي خطر على حسابك.</p>
+          <button class="buy" onclick="order('Free Fire 100 Diamonds','4.5 DT')"><i class="fab fa-whatsapp"></i> شحن الآن</button>
+        </div>
+      </div>
+    </div>
 
-<!-- AI TOOLS -->
+    <div class="card-wrapper reveal" style="animation-delay: 0.1s;">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="file_00000000c7b0720c9550487cfcc0af14.png" alt="PUBG UC" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fas fa-crosshairs" style="color: #f39c12;"></i></div>
+          <h3>PUBG Mobile</h3>
+          <div class="price">5.0 <span class="currency">DT</span></div>
+          <p class="bio">شحن 60 شدة (UC) للارتقاء بحسابك، تفعيل الرويال باس، وتفتيح الصناديق. شحن فوري ومضمون بالـ ID.</p>
+          <button class="buy" onclick="order('PUBG 60 UC','5.0 DT')"><i class="fab fa-whatsapp"></i> شحن الآن</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper reveal" style="animation-delay: 0.2s;">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="Screenshot_20260517_000556_Gallery.jpg" alt="eFootball Coins" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="far fa-futbol" style="color: #e74c3c;"></i></div>
+          <h3>eFootball Coins</h3>
+          <div class="price">6.5 <span class="currency">DT</span></div>
+          <p class="bio">شحن 130 كوينز بيس لتطوير تشكيلتك الأسطورية وشراء أفضل اللاعبين (Epic/Showtime). شحن رسمي وسريع.</p>
+          <button class="buy" onclick="order('eFootball 130 Coins','6.5 DT')"><i class="fab fa-whatsapp"></i> شحن الآن</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="ai">
   <h2 class="title reveal">🤖 <span>AI Tools</span></h2>
-  <p class="subtitle reveal">أدوات الذكاء الاصطناعي لتعزيز إنتاجيتك</p>
+  <p class="subtitle reveal">أقوى أدوات الذكاء الاصطناعي والتصميم لمضاعفة إنتاجيتك</p>
   <div class="section-line reveal"></div>
-  <div class="grid" style="margin-top:40px">
-
-    <div class="card reveal">
-      <div class="card-icon"><i class="fas fa-robot"></i></div>
-      <h3>ChatGPT Plus</h3>
-      <div class="price">39.9 <span class="currency">DT</span></div>
-      <p class="bio">ذكاء اصطناعي متقدم وسريع • GPT-4 • تحليل البيانات</p>
-      <button class="buy" onclick="order('ChatGPT Plus','39.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+  
+  <div class="grid">
+    <div class="card-wrapper reveal">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="file_000000005d9c722fa1428f6c22773430.png" alt="AI Tools" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fas fa-brain" style="color: #9b59b6;"></i></div>
+          <h3>ChatGPT Plus / Gemini</h3>
+          <div class="price">39.9 <span class="currency">DT</span></div>
+          <p class="bio">وصول كامل لنموذج GPT-4 أو Gemini Advanced. تحليل بيانات، برمجة معقدة، وصناعة محتوى احترافي بضمان كامل.</p>
+          <button class="buy" onclick="order('ChatGPT Plus or Gemini','39.9 DT')"><i class="fab fa-whatsapp"></i> اطلب الآن</button>
+        </div>
+      </div>
     </div>
 
-    <div class="card reveal">
-      <div class="card-icon"><i class="fas fa-brain"></i></div>
-      <h3>Gemini Advanced</h3>
-      <div class="price">34.9 <span class="currency">DT</span></div>
-      <p class="bio">AI من Google • أداء فائق • ميزات حصرية</p>
-      <button class="buy" onclick="order('Gemini Advanced','34.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    <div class="card-wrapper reveal" style="animation-delay: 0.2s;">
+      <div class="card">
+        <div class="card-img-wrapper"><img src="Screenshot_20260517_000552_Gallery.jpg" alt="Canva Pro" loading="lazy"></div>
+        <div class="card-content">
+          <div class="card-icon"><i class="fas fa-palette" style="color: #00C4CC;"></i></div>
+          <h3>Canva Pro</h3>
+          <div class="price">14.9 <span class="currency">DT</span></div>
+          <p class="bio">حساب كانفا برو رسمي ومستقر. ملايين القوالب الحصرية، ميزة إزالة الخلفية بضغطة زر، وتصدير بجودات عالية.</p>
+          <button class="buy" onclick="order('Canva Pro','14.9 DT')"><i class="fab fa-whatsapp"></i> اطلب الآن</button>
+        </div>
+      </div>
     </div>
-
-    <div class="card reveal">
-      <div class="card-icon"><i class="fas fa-palette"></i></div>
-      <h3>Canva Pro</h3>
-      <div class="price">14.9 <span class="currency">DT</span></div>
-      <p class="bio">تصميم احترافي • قوالب حصرية • تصدير بدون علامة مائية</p>
-      <button class="buy" onclick="order('Canva Pro','14.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
-    </div>
-
   </div>
 </section>
 
-<div class="glow-line"></div>
-
-<!-- SOCIAL MEDIA -->
-<section id="social">
+<section id="social" style="background: rgba(0,212,255,0.02);">
   <h2 class="title reveal">📈 <span>Social Media</span></h2>
-  <p class="subtitle reveal">عزز حضورك على منصات التواصل الاجتماعي</p>
+  <p class="subtitle reveal">خدمات دعم حقيقية وسريعة لتعزيز حضورك الرقمي</p>
   <div class="section-line reveal"></div>
-  <div class="list" style="margin-top:40px">
-
-    <div class="item reveal" onclick="order('Instagram Followers','5 DT / 1K')">
-      <div class="item-right">
-        <div class="item-icon"><i class="fab fa-instagram"></i></div>
-        <div class="item-name">Instagram Followers</div>
+  
+  <div class="card-wrapper reveal" style="max-width: 1200px; margin: 0 auto 40px;">
+    <div class="card" style="flex-direction: row; flex-wrap: wrap;">
+      <img src="Screenshot_20260517_000602_Gallery.jpg" alt="Social Media Boost" style="width: 100%; height: 250px; object-fit: cover; opacity: 0.7;" loading="lazy">
+      <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--dark-bg) 20%, transparent); display: flex; align-items: center; padding: 40px;">
+        <h3 style="font-size: 32px; font-weight: 900; text-shadow: 0 0 20px #000;">دعم حسابات احترافي<br><span style="color: var(--primary); font-size: 20px;">ضمان عدم النقصان في المتابعين</span></h3>
       </div>
-      <span class="price-small">5 DT / 1K</span>
     </div>
+  </div>
 
-    <div class="item reveal" onclick="order('TikTok Views','2 DT / 10K')">
-      <div class="item-right">
-        <div class="item-icon"><i class="fab fa-tiktok"></i></div>
-        <div class="item-name">TikTok Views</div>
-      </div>
-      <span class="price-small">2 DT / 10K</span>
-    </div>
-
-    <div class="item reveal" onclick="order('Facebook Likes','4 DT / 1K')">
-      <div class="item-right">
-        <div class="item-icon"><i class="fab fa-facebook-f"></i></div>
-        <div class="item-name">Facebook Likes</div>
-      </div>
-      <span class="price-small">4 DT / 1K</span>
-    </div>
-
-    <div class="item reveal" onclick="order('YouTube Views','3 DT / 1K')">
-      <div class="item-right">
-        <div class="item-icon"><i class="fab fa-youtube"></i></div>
-        <div class="item-name">YouTube Views</div>
-      </div>
-      <span class="price-small">3 DT / 1K</span>
-    </div>
-
+  <div class="list">
+    <div class="item-wrapper reveal"><div class="item" onclick="order('Instagram Followers','5 DT / 1K')">
+      <div class="item-right"><div class="item-icon"><i class="fab fa-instagram" style="color:#E1306C;"></i></div><div class="item-name">متابعين انستغرام</div></div><span class="price-small">5 DT / 1K</span>
+    </div></div>
+    <div class="item-wrapper reveal" style="animation-delay: 0.1s;"><div class="item" onclick="order('TikTok Views','2 DT / 10K')">
+      <div class="item-right"><div class="item-icon"><i class="fab fa-tiktok" style="color:#fff;"></i></div><div class="item-name">مشاهدات تيك توك</div></div><span class="price-small">2 DT / 10K</span>
+    </div></div>
+    <div class="item-wrapper reveal" style="animation-delay: 0.2s;"><div class="item" onclick="order('Facebook Likes','4 DT / 1K')">
+      <div class="item-right"><div class="item-icon"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></div><div class="item-name">لايكات فيسبوك</div></div><span class="price-small">4 DT / 1K</span>
+    </div></div>
   </div>
 </section>
 
-<div class="glow-line"></div>
-
-<!-- FEATURES -->
-<section id="features">
-  <h2 class="title reveal">⭐ <span>لماذا تختارنا؟</span></h2>
-  <p class="subtitle reveal">نقدم لك أفضل تجربة شراء ممكنة</p>
+<section id="testimonials">
+  <h2 class="title reveal">⭐ <span>آراء عملائنا</span></h2>
+  <p class="subtitle reveal">نفخر بخدمة أكثر من 500 عميل في تونس</p>
   <div class="section-line reveal"></div>
-  <div class="features">
-    <div class="feature reveal">
-      <i class="fas fa-bolt"></i>
-      <h4>توصيل سريع</h4>
-      <p>استلم اشتراكك في دقائق معدودة بعد الدفع</p>
+
+  <div class="testimonials">
+    <div class="review-card reveal">
+      <i class="fas fa-quote-right"></i>
+      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="review-text">"خدمة سريعة برشة ومضمونة! شحنت جواهر فري فاير ووصلوني في أقل من دقيقتين. يعطيهم الصحة أحسن متجر تعاملت معاه."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar"><i class="fas fa-user"></i></div>
+        <div class="reviewer-info"><h5>ياسين م.</h5><span>عميل مميز</span></div>
+      </div>
     </div>
-    <div class="feature reveal">
-      <i class="fas fa-shield-halved"></i>
-      <h4>ضمان كامل</h4>
-      <p>ضمان على جميع الاشتراكات طوال المدة</p>
-    </div>
-    <div class="feature reveal">
-      <i class="fas fa-headset"></i>
-      <h4>دعم 24/7</h4>
-      <p>فريق دعم متاح في أي وقت لمساعدتك</p>
-    </div>
-    <div class="feature reveal">
-      <i class="fas fa-tags"></i>
-      <h4>أسعار منافسة</h4>
-      <p>أفضل الأسعار في السوق التونسي</p>
+    <div class="review-card reveal" style="animation-delay: 0.2s;">
+      <i class="fas fa-quote-right"></i>
+      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-stroke"></i></div>
+      <p class="review-text">"خذيت اشتراك نيتفليكس، الحساب راكح وما يقصش جملة، والدعم الفني متاعهم يجاوبو بالوقت على الواتساب. ننصحكم بيهم."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar"><i class="fas fa-user"></i></div>
+        <div class="reviewer-info"><h5>فرح ب.</h5><span>عميل مميز</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="glow-line"></div>
+<section id="faq" style="background: rgba(0,212,255,0.02);">
+  <h2 class="title reveal">❓ <span>الأسئلة الشائعة</span></h2>
+  <p class="subtitle reveal">كل ما تحتاج معرفته عن خدماتنا وسياسة الاسترجاع</p>
+  <div class="section-line reveal"></div>
 
-<!-- CTA -->
-<section class="cta">
-  <h2 class="title reveal">جاهز <span>تبدأ؟</span></h2>
-  <p class="subtitle reveal">كل الخدمات مع طلب مباشر عبر WhatsApp<br>اختر الخدمة اللي تناسبك وتواصل معنا</p>
-  <a class="btn primary reveal" href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> تواصل الآن</a>
+  <div class="faq-container">
+    <details class="reveal">
+      <summary>كم يستغرق تفعيل الاشتراك أو الشحن؟</summary>
+      <div class="faq-content">عملية التفعيل أو شحن الألعاب تتم بشكل فوري أو في غضون 5 إلى 15 دقيقة كحد أقصى بعد تأكيد الدفع عبر الواتساب.</div>
+    </details>
+    <details class="reveal">
+      <summary>ما هي طرق الدفع المتاحة؟</summary>
+      <div class="faq-content">لتسهيل المعاملات، نقبل الدفع عبر تطبيقات البريد التونسي (D17)، محفظة Sobflous، التحويلات البنكية، وفي بعض الخدمات نقبل رصيد الهاتف.</div>
+    </details>
+    <details class="reveal">
+      <summary>ما هي سياسة الضمان والاسترجاع؟</summary>
+      <div class="faq-content">نقدم ضماناً كاملاً (Full Warranty) على جميع الاشتراكات طوال المدة المشتراة. في حال حدوث أي خلل فني لا يمكن إصلاحه، نضمن لك استبدال الحساب فوراً أو استرجاع أموالك (Refund) وفقاً للمدة المتبقية.</div>
+    </details>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<section class="cta-section">
+  <h2 class="title reveal" style="font-size: clamp(35px, 5vw, 55px);">مستعد لرفع مستوى <span>حساباتك؟</span></h2>
+  <p class="subtitle reveal" style="color: #fff; margin-top: 15px;">انضم لمئات العملاء واستمتع بأفضل الخدمات الرقمية في تونس بأرخص الأسعار.</p>
+  <div class="btns reveal" style="justify-content: center; margin-top: 30px;">
+    <a class="btn whatsapp" href="https://wa.me/21658086148" target="_blank" style="padding: 20px 50px; font-size: 18px; border-radius: 20px;">
+      <i class="fab fa-whatsapp" style="font-size: 24px;"></i> تواصل للطلب الآن
+    </a>
+  </div>
+  
+  <div class="payments reveal">
+    <div class="pay-method"><i class="fas fa-mobile-screen"></i><span>D17</span></div>
+    <div class="pay-method"><i class="fas fa-wallet"></i><span>Sobflous</span></div>
+    <div class="pay-method"><i class="fas fa-building-columns"></i><span>Virement</span></div>
+  </div>
+</section>
+
 <footer>
-  <span>© 2026 Nova Subs — جميع الحقوق محفوظة</span>
-  <i class="fas fa-heart" style="font-size:12px"></i>
-  <div class="footer-links">
-    <a href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.facebook.com/share/1LWgtzC629/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-  </div>
+  <div style="font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 15px;"><i class="fas fa-fire-flame-curved" style="color: var(--primary);"></i> NOVA SUBS</div>
+  <span>© 2026 Nova Subs Store. جميع الحقوق محفوظة. تم التصميم بحب في تونس <i class="fas fa-heart" style="color: var(--accent);"></i></span>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/21658086148" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/21658086148" target="_blank" class="wa-float" title="راسلنا على واتساب"><i class="fab fa-whatsapp"></i></a>
 
-<!-- ORDER SCRIPT -->
+<div class="purchase-popup" id="purchasePopup">
+  <i class="fas fa-check-circle"></i>
+  <div class="purchase-info">
+    <span id="buyerName">أحمد من صفاقس</span>
+    <p>اشترى للتو <span id="buyerItem" style="color:var(--primary);">Netflix Premium</span></p>
+  </div>
+</div>
+
 <script>
-function order(product, price){
-  const msg = `مرحباً 👋\n\nأريد طلب:\n📦 ${product}\n💰 السعر: ${price}\n\nطريقة الدفع (اختر واحدة):\n1️⃣ D17\n2️⃣ Flouci\n3️⃣ تحويل بنكي\n4️⃣ Crypto\n\nأريد تأكيد الطلب من فضلك ✅`;
+// WhatsApp Order Function
+function order(product, price) {
+  const msg = `مرحباً Nova Subs 👋\n\nأريد طلب:\n📦 الخدمة: *${product}*\n💰 السعر: *${price}*\n\nالرجاء تأكيد الطلب وإرسال تفاصيل الدفع ✅`;
   window.open("https://wa.me/21658086148?text=" + encodeURIComponent(msg), "_blank");
 }
 
-// NAVBAR SCROLL
+// Navbar Scroll Effect
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// MOBILE MENU
-function toggleMenu(){
+// Mobile Menu Toggle
+function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('menuOverlay').classList.toggle('open');
 }
 
-// REVEAL ON SCROLL
+// Advanced Scroll Reveal
 const reveals = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, idx) => {
-    if(entry.isIntersecting){
-      setTimeout(() => entry.target.classList.add('active'), idx * 100);
+  entries.forEach((entry) => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('active');
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 reveals.forEach(el => revealObserver.observe(el));
 
-// COUNTER ANIMATION
-const statNums = document.querySelectorAll('.stat-num');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      const el = entry.target;
-      const target = parseInt(el.dataset.target);
-      const suffix = el.textContent.replace(/[0-9]/g, '');
-      let current = 0;
-      const step = Math.ceil(target / 60);
-      const timer = setInterval(() => {
-        current += step;
-        if(current >= target){
-          current = target;
-          clearInterval(timer);
-        }
-        el.textContent = current + suffix;
-      }, 30);
-      counterObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-statNums.forEach(el => counterObserver.observe(el));
-
-// PARTICLES
-(function(){
+// Futuristic Particles Engine
+(function() {
   const container = document.getElementById('particles');
-  for(let i = 0; i < 30; i++){
+  const particleCount = window.innerWidth < 768 ? 15 : 30; // Less particles on mobile for performance
+  for(let i = 0; i < particleCount; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.right = Math.random() * 100 + '%';
     p.style.animationDuration = (Math.random() * 8 + 6) + 's';
     p.style.animationDelay = (Math.random() * 10) + 's';
-    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
     container.appendChild(p);
   }
 })();
+
+// Social Proof Popup (Live Sales)
+const locations = ['صفاقس', 'تونس', 'سوسة', 'بنزرت', 'نابل', 'المنستير', 'قابس'];
+const firstNames = ['أحمد', 'فرح', 'ياسين', 'عزيز', 'مريم', 'محمد', 'أمين'];
+const items = ['Netflix Premium', '100 جوهرة Free Fire', 'Spotify Premium', 'Canva Pro', '60 UC PUBG', 'متابعين انستغرام'];
+const popup = document.getElementById('purchasePopup');
+
+setInterval(() => {
+  const name = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const loc = locations[Math.floor(Math.random() * locations.length)];
+  document.getElementById('buyerName').textContent = `${name} من ${loc}`;
+  document.getElementById('buyerItem').textContent = items[Math.floor(Math.random() * items.length)];
+  
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 5000); 
+}, Math.random() * 10000 + 15000); // Random interval between 15s - 25s
 </script>
 
 </body>
 </html>
-
