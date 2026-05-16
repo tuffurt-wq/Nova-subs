@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Subs</title>
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/cairo@latest/index.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+    html{scroll-behavior:smooth}
+    body{background:#000;color:#fff;overflow-x:hidden}
+
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:#0a0a0a}
+    ::-webkit-scrollbar-thumb{background:#ff0000;border-radius:10px}
+
+    /* NAVBAR */
+    .navbar{
+      position:fixed;top:0;right:0;left:0;z-index:1000;
+      padding:18px 5%;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,0.6);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(255,0,0,0.1);
+      transition:all .4s ease
+    }
+    .navbar.scrolled{
+      padding:12px 5%;
+      background:rgba(0,0,0,0.85);
+      border-bottom-color:rgba(255,0,0,0.3)
+    }
+    .nav-logo{font-size:26px;font-weight:900;letter-spacing:1px}
+    .nav-logo span{color:#ff0000}
+    .nav-links{display:flex;gap:30px;list-style:none}
+    .nav-links a{
+      color:#ccc;text-decoration:none;font-size:15px;font-weight:600;
+      position:relative;transition:color .3s
+    }
+    .nav-links a::after{
+      content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;
+      background:#ff0000;transition:width .3s
+    }
+    .nav-links a:hover{color:#fff}
+    .nav-links a:hover::after{width:100%}
+    .nav-toggle{display:none;font-size:24px;color:#fff;cursor:pointer;background:none;border:none}
+
+    /* HERO */
+    .hero{
+      min-height:100vh;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;padding:120px 20px 80px;
+      position:relative;overflow:hidden
+    }
+    .hero::before{
+      content:'';position:absolute;
+      width:600px;height:600px;
+      background:radial-gradient(circle,rgba(255,0,0,0.15),transparent 70%);
+      top:50%;left:50%;transform:translate(-50%,-50%);
+      animation:heroPulse 4s ease-in-out infinite
+    }
+    @keyframes heroPulse{
+      0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}
+      50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+    }
+
+    /* Floating particles */
+    .particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .particle{
+      position:absolute;width:3px;height:3px;
+      background:rgba(255,0,0,0.4);border-radius:50%;
+      animation:floatUp linear infinite
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(100vh) scale(0);opacity:0}
+      10%{opacity:1}
+      90%{opacity:1}
+      100%{transform:translateY(-10vh) scale(1);opacity:0}
+    }
+
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(255,0,0,0.1);border:1px solid rgba(255,0,0,0.3);
+      padding:8px 20px;border-radius:50px;font-size:14px;
+      color:#ff6b6b;margin-bottom:25px;
+      animation:fadeInDown .8s ease
+    }
+    .hero-badge i{animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+    .hero h1{
+      font-size:clamp(50px,10vw,100px);font-weight:900;
+      position:relative;z-index:1;
+      animation:fadeInUp .8s ease .2s both
+    }
+    .hero h1 span{
+      color:#ff0000;
+      text-shadow:0 0 40px rgba(255,0,0,0.5),0 0 80px rgba(255,0,0,0.2)
+    }
+    .hero p{
+      margin-top:20px;font-size:clamp(16px,2.5vw,22px);
+      color:#aaa;max-width:800px;line-height:1.9;
+      position:relative;z-index:1;
+      animation:fadeInUp .8s ease .4s both
+    }
+
+    .btns{margin-top:35px;display:flex;gap:15px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;animation:fadeInUp .8s ease .6s both}
+
+    .btn{
+      padding:16px 32px;border-radius:14px;text-decoration:none;
+      font-weight:700;font-size:16px;cursor:pointer;
+      display:inline-flex;align-items:center;gap:10px;
+      transition:all .3s ease;position:relative;overflow:hidden
+    }
+    .btn::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent);
+      transform:translateX(-100%);transition:transform .5s
+    }
+    .btn:hover::before{transform:translateX(100%)}
+    .primary{
+      background:linear-gradient(135deg,#ff0000,#cc0000);
+      color:#fff;box-shadow:0 8px 30px rgba(255,0,0,0.3)
+    }
+    .primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,0,0,0.5)}
+    .outline{
+      border:2px solid rgba(255,0,0,0.5);color:#fff;
+      background:rgba(255,0,0,0.05)
+    }
+    .outline:hover{
+      border-color:#ff0000;background:rgba(255,0,0,0.1);
+      transform:translateY(-3px)
+    }
+
+    /* STATS */
+    .stats{
+      display:flex;justify-content:center;gap:60px;flex-wrap:wrap;
+      padding:60px 5%;position:relative;z-index:1;
+      animation:fadeInUp .8s ease .8s both
+    }
+    .stat{text-align:center}
+    .stat-num{font-size:42px;font-weight:900;color:#ff0000}
+    .stat-label{color:#888;font-size:14px;margin-top:5px}
+
+    /* SECTIONS */
+    section{padding:100px 7%}
+
+    .title{
+      font-size:clamp(32px,5vw,50px);text-align:center;
+      font-weight:900;margin-bottom:10px;
+      position:relative
+    }
+    .title span{color:#ff0000}
+    .subtitle{text-align:center;color:#888;font-size:17px;margin-bottom:50px;line-height:1.8}
+
+    .section-line{
+      width:60px;height:4px;background:linear-gradient(90deg,#ff0000,transparent);
+      margin:15px auto 0;border-radius:10px
+    }
+
+    /* CARDS GRID */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
+
+    .card{
+      background:linear-gradient(145deg,#0d0d0d,#111);
+      border:1px solid #1a1a1a;
+      border-radius:24px;padding:30px;
+      transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+      position:relative;overflow:hidden
+    }
+    .card::before{
+      content:'';position:absolute;top:0;right:0;
+      width:100px;height:100px;
+      background:radial-gradient(circle,rgba(255,0,0,0.1),transparent 70%);
+      transition:all .4s
+    }
+    .card:hover{
+      transform:translateY(-10px);
+      border-color:rgba(255,0,0,0.4);
+      box-shadow:0 20px 60px rgba(255,0,0,0.1)
+    }
+    .card:hover::before{width:200px;height:200px}
+
+    .card-icon{
+      width:60px;height:60px;
+      background:rgba(255,0,0,0.1);
+      border:1px solid rgba(255,0,0,0.2);
+      border-radius:16px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:26px;color:#ff0000;margin-bottom:18px;
+      transition:all .3s
+    }
+    .card:hover .card-icon{
+      background:rgba(255,0,0,0.2);
+      transform:scale(1.1) rotate(-5deg)
+    }
+
+    .card h3{font-size:22px;font-weight:700;margin-bottom:8px}
+    .price{
+      font-size:36px;font-weight:900;
+      background:linear-gradient(135deg,#ff0000,#ff6b6b);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      margin:12px 0
+    }
+    .price .currency{font-size:18px;font-weight:600}
+    .bio{color:#999;font-size:14px;line-height:1.8;margin-bottom:5px}
+
+    .buy{
+      margin-top:18px;width:100%;padding:14px;border:none;
+      border-radius:14px;
+      background:linear-gradient(135deg,#ff0000,#cc0000);
+      color:#fff;font-weight:700;font-size:15px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      transition:all .3s;position:relative;overflow:hidden
+    }
+    .buy::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,transparent,rgba(255,255,255,0.2),transparent);
+      transform:translateX(-100%);transition:transform .5s
+    }
+    .buy:hover::after{transform:translateX(100%)}
+    .buy:hover{box-shadow:0 8px 25px rgba(255,0,0,0.4);transform:scale(1.02)}
+
+    /* SOCIAL LIST */
+    .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+
+    .item{
+      background:linear-gradient(145deg,#0a0a0a,#111);
+      border:1px solid #1a1a1a;
+      padding:22px 25px;border-radius:18px;
+      display:flex;justify-content:space-between;align-items:center;
+      transition:all .3s;cursor:pointer
+    }
+    .item:hover{
+      border-color:rgba(255,0,0,0.3);
+      transform:translateX(-8px);
+      background:linear-gradient(145deg,#0d0000,#111)
+    }
+    .item-right{display:flex;align-items:center;gap:14px}
+    .item-icon{
+      width:44px;height:44px;
+      background:rgba(255,0,0,0.1);
+      border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:20px;color:#ff0000
+    }
+    .item-name{font-weight:600;font-size:15px}
+    .price-small{
+      color:#ff0000;font-weight:900;font-size:16px;
+      white-space:nowrap
+    }
+
+    /* FEATURES */
+    .features{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:25px;margin-top:50px
+    }
+    .feature{
+      text-align:center;padding:30px 20px;
+      border-radius:20px;
+      background:rgba(255,0,0,0.03);
+      border:1px solid rgba(255,0,0,0.08);
+      transition:all .3s
+    }
+    .feature:hover{
+      background:rgba(255,0,0,0.08);
+      border-color:rgba(255,0,0,0.2);
+      transform:translateY(-5px)
+    }
+    .feature i{font-size:32px;color:#ff0000;margin-bottom:15px}
+    .feature h4{font-size:17px;margin-bottom:8px}
+    .feature p{color:#888;font-size:13px;line-height:1.7}
+
+    /* CTA */
+    .cta{
+      text-align:center;
+      padding:100px 7%;
+      background:linear-gradient(180deg,#000,#1a0000,#000);
+      position:relative;overflow:hidden
+    }
+    .cta::before{
+      content:'';position:absolute;
+      width:500px;height:500px;
+      background:radial-gradient(circle,rgba(255,0,0,0.08),transparent 70%);
+      top:50%;left:50%;transform:translate(-50%,-50%)
+    }
+
+    /* FOOTER */
+    footer{
+      text-align:center;padding:30px;
+      border-top:1px solid #1a1a1a;color:#555;
+      font-size:14px;
+      display:flex;justify-content:center;align-items:center;gap:8px;
+      flex-wrap:wrap
+    }
+    footer i{color:#ff0000}
+    .footer-links{margin-top:15px;display:flex;justify-content:center;gap:20px}
+    .footer-links a{
+      color:#666;text-decoration:none;font-size:20px;
+      transition:all .3s
+    }
+    .footer-links a:hover{color:#ff0000;transform:translateY(-3px)}
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    @keyframes fadeInDown{
+      from{opacity:0;transform:translateY(-20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .reveal{
+      opacity:0;transform:translateY(40px);
+      transition:all .8s cubic-bezier(.175,.885,.32,1.275)
+    }
+    .reveal.active{opacity:1;transform:translateY(0)}
+
+    /* MOBILE NAV */
+    .mobile-menu{
+      position:fixed;top:0;right:-100%;width:280px;height:100vh;
+      background:rgba(10,10,10,0.98);
+      backdrop-filter:blur(20px);
+      border-left:1px solid #222;
+      padding:80px 30px 30px;
+      transition:right .4s ease;z-index:999;
+      display:flex;flex-direction:column;gap:5px
+    }
+    .mobile-menu.open{right:0}
+    .mobile-menu a{
+      color:#ccc;text-decoration:none;font-size:17px;
+      padding:14px 0;border-bottom:1px solid #1a1a1a;
+      font-weight:600;transition:all .3s;
+      display:flex;align-items:center;gap:10px
+    }
+    .mobile-menu a i{color:#ff0000;width:20px}
+    .mobile-menu a:hover{color:#fff;padding-right:10px}
+    .menu-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.6);
+      z-index:998;opacity:0;pointer-events:none;transition:opacity .3s
+    }
+    .menu-overlay.open{opacity:1;pointer-events:all}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-toggle{display:block}
+      .stats{gap:30px}
+      .stat-num{font-size:32px}
+      section{padding:70px 5%}
+      .grid{grid-template-columns:1fr}
+      .list{grid-template-columns:1fr}
+    }
+
+    /* GLOW LINE */
+    .glow-line{
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,0,0,0.5),transparent);
+      margin:0 auto;max-width:400px
+    }
+
+    /* WHATSAPP FLOAT */
+    .wa-float{
+      position:fixed;bottom:30px;left:30px;z-index:900;
+      width:60px;height:60px;
+      background:#25d366;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:28px;color:#fff;text-decoration:none;
+      box-shadow:0 5px 25px rgba(37,211,102,0.4);
+      animation:waFloat 3s ease-in-out infinite;
+      transition:transform .3s
+    }
+    .wa-float:hover{transform:scale(1.1)}
+    @keyframes waFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">NOVA <span>SUBS</span></div>
+  <ul class="nav-links">
+    <li><a href="#streaming">الخدمات</a></li>
+    <li><a href="#ai">AI Tools</a></li>
+    <li><a href="#social">سوشيال ميديا</a></li>
+    <li><a href="#features">مميزاتنا</a></li>
+    <li><a href="https://wa.me/21658086148" target="_blank">تواصل</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#streaming" onclick="toggleMenu()"><i class="fas fa-play"></i> الخدمات</a>
+  <a href="#ai" onclick="toggleMenu()"><i class="fas fa-robot"></i> AI Tools</a>
+  <a href="#social" onclick="toggleMenu()"><i class="fas fa-chart-line"></i> سوشيال ميديا</a>
+  <a href="#features" onclick="toggleMenu()"><i class="fas fa-star"></i> مميزاتنا</a>
+  <a href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> تواصل معنا</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+  <div class="hero-badge"><i class="fas fa-bolt"></i> أفضل الأسعار في تونس</div>
+  <h1>NOVA <span>SUBS</span></h1>
+  <p>اشتراكات رقمية • AI Tools • Gaming • Social Media Services<br>كل ما تحتاجه بأسعار منافسة وتوصيل سريع</p>
+  <div class="btns">
+    <a class="btn primary" href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> اطلب الآن</a>
+    <a class="btn outline" href="https://www.facebook.com/share/1LWgtzC629/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" data-target="500">0+</div><div class="stat-label">عميل سعيد</div></div>
+    <div class="stat"><div class="stat-num" data-target="50">0+</div><div class="stat-label">خدمة متوفرة</div></div>
+    <div class="stat"><div class="stat-num" data-target="24">0/7</div><div class="stat-label">دعم متواصل</div></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- STREAMING -->
+<section id="streaming">
+  <h2 class="title reveal">🎬 <span>Streaming</span></h2>
+  <p class="subtitle reveal">أشهر الاشتراكات الترفيهية بأفضل الأسعار</p>
+  <div class="section-line reveal"></div>
+  <div class="grid" style="margin-top:40px">
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fab fa-netflix"></i></div>
+      <h3>Netflix Premium</h3>
+      <div class="price">12.9 <span class="currency">DT</span></div>
+      <p class="bio">4K streaming • حساب مستقر • مشاهدة بدون تقطيع • ملف خاص بك</p>
+      <button class="buy" onclick="order('Netflix Premium','12.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fab fa-spotify"></i></div>
+      <h3>Spotify Premium</h3>
+      <div class="price">9.9 <span class="currency">DT</span></div>
+      <p class="bio">موسيقى بدون إعلانات + تحميل الأغاني + جودة عالية</p>
+      <button class="buy" onclick="order('Spotify Premium','9.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fas fa-tv"></i></div>
+      <h3>IPTV Premium</h3>
+      <div class="price">89 <span class="currency">DT</span></div>
+      <p class="bio">جميع القنوات العالمية + جودة عالية + بث مباشر بدون انقطاع</p>
+      <button class="buy" onclick="order('IPTV Premium','89 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- AI TOOLS -->
+<section id="ai">
+  <h2 class="title reveal">🤖 <span>AI Tools</span></h2>
+  <p class="subtitle reveal">أدوات الذكاء الاصطناعي لتعزيز إنتاجيتك</p>
+  <div class="section-line reveal"></div>
+  <div class="grid" style="margin-top:40px">
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fas fa-robot"></i></div>
+      <h3>ChatGPT Plus</h3>
+      <div class="price">39.9 <span class="currency">DT</span></div>
+      <p class="bio">ذكاء اصطناعي متقدم وسريع • GPT-4 • تحليل البيانات</p>
+      <button class="buy" onclick="order('ChatGPT Plus','39.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fas fa-brain"></i></div>
+      <h3>Gemini Advanced</h3>
+      <div class="price">34.9 <span class="currency">DT</span></div>
+      <p class="bio">AI من Google • أداء فائق • ميزات حصرية</p>
+      <button class="buy" onclick="order('Gemini Advanced','34.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-icon"><i class="fas fa-palette"></i></div>
+      <h3>Canva Pro</h3>
+      <div class="price">14.9 <span class="currency">DT</span></div>
+      <p class="bio">تصميم احترافي • قوالب حصرية • تصدير بدون علامة مائية</p>
+      <button class="buy" onclick="order('Canva Pro','14.9 DT')"><i class="fab fa-whatsapp"></i> شراء الآن</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- SOCIAL MEDIA -->
+<section id="social">
+  <h2 class="title reveal">📈 <span>Social Media</span></h2>
+  <p class="subtitle reveal">عزز حضورك على منصات التواصل الاجتماعي</p>
+  <div class="section-line reveal"></div>
+  <div class="list" style="margin-top:40px">
+
+    <div class="item reveal" onclick="order('Instagram Followers','5 DT / 1K')">
+      <div class="item-right">
+        <div class="item-icon"><i class="fab fa-instagram"></i></div>
+        <div class="item-name">Instagram Followers</div>
+      </div>
+      <span class="price-small">5 DT / 1K</span>
+    </div>
+
+    <div class="item reveal" onclick="order('TikTok Views','2 DT / 10K')">
+      <div class="item-right">
+        <div class="item-icon"><i class="fab fa-tiktok"></i></div>
+        <div class="item-name">TikTok Views</div>
+      </div>
+      <span class="price-small">2 DT / 10K</span>
+    </div>
+
+    <div class="item reveal" onclick="order('Facebook Likes','4 DT / 1K')">
+      <div class="item-right">
+        <div class="item-icon"><i class="fab fa-facebook-f"></i></div>
+        <div class="item-name">Facebook Likes</div>
+      </div>
+      <span class="price-small">4 DT / 1K</span>
+    </div>
+
+    <div class="item reveal" onclick="order('YouTube Views','3 DT / 1K')">
+      <div class="item-right">
+        <div class="item-icon"><i class="fab fa-youtube"></i></div>
+        <div class="item-name">YouTube Views</div>
+      </div>
+      <span class="price-small">3 DT / 1K</span>
+    </div>
+
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- FEATURES -->
+<section id="features">
+  <h2 class="title reveal">⭐ <span>لماذا تختارنا؟</span></h2>
+  <p class="subtitle reveal">نقدم لك أفضل تجربة شراء ممكنة</p>
+  <div class="section-line reveal"></div>
+  <div class="features">
+    <div class="feature reveal">
+      <i class="fas fa-bolt"></i>
+      <h4>توصيل سريع</h4>
+      <p>استلم اشتراكك في دقائق معدودة بعد الدفع</p>
+    </div>
+    <div class="feature reveal">
+      <i class="fas fa-shield-halved"></i>
+      <h4>ضمان كامل</h4>
+      <p>ضمان على جميع الاشتراكات طوال المدة</p>
+    </div>
+    <div class="feature reveal">
+      <i class="fas fa-headset"></i>
+      <h4>دعم 24/7</h4>
+      <p>فريق دعم متاح في أي وقت لمساعدتك</p>
+    </div>
+    <div class="feature reveal">
+      <i class="fas fa-tags"></i>
+      <h4>أسعار منافسة</h4>
+      <p>أفضل الأسعار في السوق التونسي</p>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- CTA -->
+<section class="cta">
+  <h2 class="title reveal">جاهز <span>تبدأ؟</span></h2>
+  <p class="subtitle reveal">كل الخدمات مع طلب مباشر عبر WhatsApp<br>اختر الخدمة اللي تناسبك وتواصل معنا</p>
+  <a class="btn primary reveal" href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i> تواصل الآن</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Nova Subs — جميع الحقوق محفوظة</span>
+  <i class="fas fa-heart" style="font-size:12px"></i>
+  <div class="footer-links">
+    <a href="https://wa.me/21658086148" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.facebook.com/share/1LWgtzC629/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/21658086148" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<!-- ORDER SCRIPT -->
+<script>
+function order(product, price){
+  const msg = `مرحباً 👋\n\nأريد طلب:\n📦 ${product}\n💰 السعر: ${price}\n\nطريقة الدفع (اختر واحدة):\n1️⃣ D17\n2️⃣ Flouci\n3️⃣ تحويل بنكي\n4️⃣ Crypto\n\nأريد تأكيد الطلب من فضلك ✅`;
+  window.open("https://wa.me/21658086148?text=" + encodeURIComponent(msg), "_blank");
+}
+
+// NAVBAR SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// MOBILE MENU
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('open');
+}
+
+// REVEAL ON SCROLL
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, idx) => {
+    if(entry.isIntersecting){
+      setTimeout(() => entry.target.classList.add('active'), idx * 100);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+reveals.forEach(el => revealObserver.observe(el));
+
+// COUNTER ANIMATION
+const statNums = document.querySelectorAll('.stat-num');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const suffix = el.textContent.replace(/[0-9]/g, '');
+      let current = 0;
+      const step = Math.ceil(target / 60);
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= target){
+          current = target;
+          clearInterval(timer);
+        }
+        el.textContent = current + suffix;
+      }, 30);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statNums.forEach(el => counterObserver.observe(el));
+
+// PARTICLES
+(function(){
+  const container = document.getElementById('particles');
+  for(let i = 0; i < 30; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.right = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+    container.appendChild(p);
+  }
+})();
+</script>
+
+</body>
+</html>
+
